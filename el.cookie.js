@@ -1,7 +1,8 @@
 /*
- * El'Cookie v1.0
- * Copyright (c) 2025 Andrey Shuin
- * Licensed under MIT License
+ * El’Cookie v1.0
+ * © 2025 El’System
+ * Crafted with love by Andrey Shuin
+ * Licensed under the MIT License
  */
 
 (function () {
