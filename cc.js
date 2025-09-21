@@ -1,5 +1,5 @@
 /*
- * Cookie Consent Manager v1.0
+ * El'Cookie v1.0
  * Copyright (c) 2025 Andrey Shuin
  * Licensed under MIT License
  */
@@ -9,7 +9,7 @@
 
     //region CONFIG
 
-    const DEFAULT_CONSENT_BEHAVIOR = false;
+    const DEFAULT_CONSENT_BEHAVIOR = true;
 
     const generateId = () => `cc-${Math.random().toString(36).slice(2, 10)}`;
 
@@ -20,7 +20,8 @@
     };
 
     const COOKIE_NAME = 'cookie_consent';
-    const COOKIE_EXPIRY_DAYS = 365;
+    const COOKIE_EXPIRY_ALL_DAYS = 365;
+    const COOKIE_EXPIRY_REQUIRED_DAYS = 1;
 
     const STYLE_ID = generateId();
     const LINKS = {
@@ -276,7 +277,7 @@
         .${SETTINGS_CONFIG.CLASSES.header} {
             font-size: 1.3rem;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 1rem;
         }
 
         .${SETTINGS_CONFIG.CLASSES.closeBtn} {
@@ -293,7 +294,7 @@
         .${SETTINGS_CONFIG.CLASSES.description} {
             font-size: .9rem;
             letter-spacing: .03em;
-            margin-bottom: 1.3rem;
+            margin-bottom: 2rem;
             line-height: 1.2;
         }
 
@@ -307,7 +308,7 @@
             align-items: center;
             cursor: pointer;
             font-weight: 500;
-            padding-bottom: 1rem;
+            padding-bottom: .5rem;
             gap: .5rem;
         }
 
@@ -428,10 +429,12 @@
             localStorage.setItem('cookie_consent_timestamp', new Date().getTime().toString());
         },
 
-        isMoreThanOneDayAgo: (timestamp) => {
+        isExpiredByDays: (timestamp) => {
             if (!timestamp) return true;
             const oneDay = 24 * 60 * 60 * 1000;
-            return (new Date().getTime() - parseInt(timestamp, 10)) > oneDay;
+            const requiredDays = COOKIE_EXPIRY_REQUIRED_DAYS;
+            const requiredTime = requiredDays * oneDay;
+            return (new Date().getTime() - parseInt(timestamp, 10)) > requiredTime;
         }
     };
 
@@ -459,7 +462,7 @@
             if (consent) {
                 const permissions = consent.split(',');
                 if (permissions.includes(COOKIE_CATEGORIES.REQUIRED)) {
-                    if (permissions.length === 1 && StorageManager.isMoreThanOneDayAgo(timestamp)) {
+                    if (permissions.length === 1 && StorageManager.isExpiredByDays(timestamp)) {
                         injectCommonStyles();
                         BannerComponent.show();
                     }
@@ -526,14 +529,14 @@
 
             document.getElementById(btnAll)?.addEventListener('click', () => {
                 const permissions = Object.values(COOKIE_CATEGORIES).join(',');
-                CookieManager.set(COOKIE_NAME, permissions, COOKIE_EXPIRY_DAYS);
+                CookieManager.set(COOKIE_NAME, permissions, COOKIE_EXPIRY_ALL_DAYS);
                 StorageManager.setConsentTimestamp();
                 this.remove();
                 PermissionManager.restore();
             });
 
             document.getElementById(btnRequired)?.addEventListener('click', () => {
-                CookieManager.set(COOKIE_NAME, COOKIE_CATEGORIES.REQUIRED, COOKIE_EXPIRY_DAYS);
+                CookieManager.set(COOKIE_NAME, COOKIE_CATEGORIES.REQUIRED, COOKIE_EXPIRY_ALL_DAYS);
                 StorageManager.setConsentTimestamp();
                 this.remove();
                 PermissionManager.restore();
@@ -701,7 +704,7 @@
 
             document.getElementById(btnAllowAll)?.addEventListener('click', () => {
                 const permissions = Object.values(COOKIE_CATEGORIES).join(',');
-                CookieManager.set(COOKIE_NAME, permissions, COOKIE_EXPIRY_DAYS);
+                CookieManager.set(COOKIE_NAME, permissions, COOKIE_EXPIRY_ALL_DAYS);
                 StorageManager.setConsentTimestamp();
                 this.remove();
                 PermissionManager.restore();
@@ -715,7 +718,7 @@
                 if (marketingChecked) selectedPermissions.push(COOKIE_CATEGORIES.MARKETING);
                 if (otherChecked) selectedPermissions.push(COOKIE_CATEGORIES.OTHER);
 
-                CookieManager.set(COOKIE_NAME, selectedPermissions.join(','), COOKIE_EXPIRY_DAYS);
+                CookieManager.set(COOKIE_NAME, selectedPermissions.join(','), COOKIE_EXPIRY_ALL_DAYS);
                 StorageManager.setConsentTimestamp();
                 this.remove();
                 PermissionManager.restore();
