@@ -9,7 +9,7 @@
 
     //region CONFIG
 
-    const DEFAULT_CONSENT_BEHAVIOR = true;
+    const DEFAULT_CONSENT_BEHAVIOR = false;
 
     const generateId = () => `cc-${Math.random().toString(36).slice(2, 10)}`;
 
