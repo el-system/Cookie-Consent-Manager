@@ -85,6 +85,6 @@ checkPermission('other', 'Согласие на сбор необязатель�
 ## Вопросы? Предложения?
 
 Пиши нам:  
-📧 `dev@el-system.ru`  
+📧 [dev@el-system.ru](mailto:dev@el-system.ru)  
 🌐 [elsystem.ru](https://el-system.ru)  
 🐙 GitHub Issues — шериф дежурит
