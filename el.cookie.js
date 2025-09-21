@@ -435,7 +435,12 @@
             const oneDay = 24 * 60 * 60 * 1000;
             const requiredDays = COOKIE_EXPIRY_REQUIRED_DAYS;
             const requiredTime = requiredDays * oneDay;
-            return (new Date().getTime() - parseInt(timestamp, 10)) > requiredTime;
+
+            const now = new Date().getTime();
+            const diffMs = now - parseInt(timestamp, 10);
+            const diffMinutes = (diffMs / 1000 / 60).toFixed(2);
+
+            return diffMs > requiredTime;
         }
     };
 
