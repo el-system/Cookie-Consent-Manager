@@ -121,6 +121,7 @@
 
         #${SETTINGS_CONFIG.IDS.dimmer} {
             position: fixed;
+            z-index: 9999;
             background-color: var(--dimmer-bg);
             backdrop-filter: blur(3px);
             top: 0;
@@ -130,13 +131,12 @@
             transition: opacity var(--cc-animate-fast);
             opacity: 0;
             display: none;
-            z-index: 100;
         }
 
         #${BANNER_CONFIG.IDS.banner},
         .${SETTINGS_CONFIG.CLASSES.modal} {
             position: fixed;
-            z-index: 1000;
+            z-index: 10000;
             background: var(--cc-bg);
             border-radius: 1rem;
             padding: 2.5rem;
