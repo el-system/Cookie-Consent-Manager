@@ -19,7 +19,7 @@
         COOKIE_EXPIRY_REQUIRED_DAYS: 1,
         API_OPEN_SETTINGS_CLASS: 'open-cookie-settings',
         LINKS: {
-            policy: '/politika'
+            policy: '/policy/'
         }
     };
 
@@ -114,8 +114,8 @@
         :root {
             --cc-animate-fast: .6s;
             --cc-bg: #fff;
-            --cc-color-main: #cf1135;
-            --cc-color-main__hover: #e60026;
+            --cc-color-main: #000;
+            --cc-color-main__hover: #333;
             --cc-color-inactive: #e9e9e9;
             --cc-color-inactive__hover: #c8c8c8ff;
             --text-gray: #7f7f7f;
