@@ -42,6 +42,31 @@ PermissionChecker.check('marketing', () => {
 PermissionChecker.check('other', () => {
   console.log('Дополнительные cookie разрешены');
 });
+
+```
+
+PHP:
+
+```php
+function checkCookieConsent($category) {
+    if (!isset($_COOKIE['cookie_consent'])) {
+        return false;
+    }
+    
+    $consent = $_COOKIE['cookie_consent'];
+    $permissions = explode(',', $consent);
+    
+    return in_array($category, $permissions);
+}
+
+if (checkCookieConsent('marketing')) {
+    echo '<script src="marketing.js"></script>';
+}
+
+if (checkCookieConsent('other')) {
+    echo '<script src="additional-features.js"></script>';
+}
+
 ```
 
 ### Открытие настроек
